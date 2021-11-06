@@ -24,5 +24,7 @@ namespace Lab.ProdutoReview.Api.Entidades
         public string Comentario { get; private set; }
         public int ProdutoId { get; private set; }
         public DateTime CriadoEm { get; private set; }
+
+        public Produto Produto { get; private set; }
     }
 }

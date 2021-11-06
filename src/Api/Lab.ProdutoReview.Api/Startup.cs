@@ -3,6 +3,7 @@ using Lab.ProdutoReview.Api.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +28,13 @@ namespace Lab.ProdutoReview.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ProdutoReviewDbContext>();
+            //var connectionString = Configuration.GetConnectionString("ProdutoDb");
+            //"Server=localhost\\SQLEXPRESS;Database=ProdutoDb;Trusted_Connection=true"
+            var connectionString = @"Server=localhost\\SQLEXPRESS;Database=ProdutoReview;Trusted_Connection=True";
+
+            services.AddDbContext<ProdutoReviewDbContext>(x => x.UseSqlServer(connectionString));
+
+            //services.AddSingleton<ProdutoReviewDbContext>();
             services.AddAutoMapper(typeof(ProdutoProfile));
 
             services.AddControllers();

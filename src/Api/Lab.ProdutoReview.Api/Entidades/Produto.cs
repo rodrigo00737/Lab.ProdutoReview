@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lab.ProdutoReview.Api.Entidades
 {
@@ -28,6 +26,12 @@ namespace Lab.ProdutoReview.Api.Entidades
         public void AddReview( ProdutoReview produtoReview)
         {
             Avaliacoes.Add(produtoReview);
+        }
+
+        public void Update(string descricao, decimal preco)
+        {
+            Descricao = descricao;
+            Preco = preco;
         }
     }
 }

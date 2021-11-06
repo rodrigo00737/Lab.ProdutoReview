@@ -2,10 +2,8 @@
 using Lab.ProdutoReview.Api.Data;
 using Lab.ProdutoReview.Api.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lab.ProdutoReview.Api.Controllers
 {
@@ -58,6 +56,20 @@ namespace Lab.ProdutoReview.Api.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, UpdateProdutoInputModel model)
         {
+            if (model.Descricao.Length > 50)
+            {
+                return BadRequest();
+            }
+
+            var produto = _dbContext.Produtos.SingleOrDefault(p => p.Id == id);
+            
+            if (produto is null)
+            {
+                return NotFound();
+            }
+
+            produto.Update(model.Descricao, model.Preco);
+
             return NoContent();
         }
 
