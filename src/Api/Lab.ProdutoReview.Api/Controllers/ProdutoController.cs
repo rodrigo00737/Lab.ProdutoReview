@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using Lab.ProdutoReview.Api.Data;
+using Lab.ProdutoReview.Api.Data.Repositories;
+using Lab.ProdutoReview.Api.Entidades;
 using Lab.ProdutoReview.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace Lab.ProdutoReview.Api.Controllers
 {
@@ -11,21 +12,21 @@ namespace Lab.ProdutoReview.Api.Controllers
     [Route("v1/api/[controller]")]
     public class ProdutoController : ControllerBase
     {
-        private readonly ProdutoReviewDbContext _dbContext;
+        private readonly ProdutoRepository _repository;
         private readonly IMapper _mapper;
 
-        public ProdutoController(ProdutoReviewDbContext dbContext, IMapper mapper)
+        public ProdutoController(ProdutoRepository repository, IMapper mapper)
         {
-            _dbContext = dbContext;
+            _repository = repository;
             _mapper = mapper;
         }
 
         public IMapper Mapper { get; }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var produtos = _dbContext.Produtos;
+            var produtos = await _repository.GetAll();
 
             var produtosViewModel = _mapper.Map<List<ProdutoViewModel>>(produtos);
 
@@ -34,9 +35,10 @@ namespace Lab.ProdutoReview.Api.Controllers
 
         //v1/api/getbyid/{id}
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var produto = _dbContext.Produtos.SingleOrDefault(p => p.Id == id);
+            var produto = await _repository.GetById(id);
+
             if (produto is null)
             {
                 return NotFound();
@@ -48,31 +50,33 @@ namespace Lab.ProdutoReview.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(AddProdutoInputModel produtoInputModel)
+        public async Task<IActionResult> Post(AddProdutoInputModel model)
         {
-            return CreatedAtAction(nameof(GetById), new { id = 1 }, produtoInputModel);
+            var produto = new Produto(model.Titulo, model.Descricao, model.Preco);
+            
+            await _repository.Add(produto);
+            
+            return CreatedAtAction(nameof(GetById), new { id = produto.Id }, model);            
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, UpdateProdutoInputModel model)
+        public async Task<IActionResult> Put(int id, UpdateProdutoInputModel model)
         {
             if (model.Descricao.Length > 50)
             {
                 return BadRequest();
             }
 
-            var produto = _dbContext.Produtos.SingleOrDefault(p => p.Id == id);
+            var produto = await _repository.GetById(id);
             
             if (produto is null)
             {
                 return NotFound();
             }
 
-            produto.Update(model.Descricao, model.Preco);
-
+            await _repository.Update(produto);
+            
             return NoContent();
         }
-
-
     }
 }

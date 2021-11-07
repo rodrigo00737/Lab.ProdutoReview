@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab.ProdutoReview.Api", "src\Api\Lab.ProdutoReview.Api\Lab.ProdutoReview.Api.csproj", "{57B66534-9704-452D-A6A9-5440748D562D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{576E54BE-20BB-4AF1-9843-57686E637D93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProdutoReview.Test", "src\Test\ProdutoReview.Test\ProdutoReview.Test.csproj", "{CCDD5034-4445-4F65-89A0-463534DE37FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{57B66534-9704-452D-A6A9-5440748D562D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57B66534-9704-452D-A6A9-5440748D562D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57B66534-9704-452D-A6A9-5440748D562D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCDD5034-4445-4F65-89A0-463534DE37FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCDD5034-4445-4F65-89A0-463534DE37FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCDD5034-4445-4F65-89A0-463534DE37FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCDD5034-4445-4F65-89A0-463534DE37FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CCDD5034-4445-4F65-89A0-463534DE37FD} = {576E54BE-20BB-4AF1-9843-57686E637D93}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C29AC5B2-3D38-444E-A4B9-E6224895C54F}

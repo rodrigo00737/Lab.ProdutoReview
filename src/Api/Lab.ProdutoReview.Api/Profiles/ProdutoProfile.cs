@@ -8,7 +8,9 @@ namespace Lab.ProdutoReview.Api.Profiles
     {
         public ProdutoProfile()
         {
-            _ = CreateMap<Entidades.ProdutoReview, ProdutoReviewViewModel>();
+            CreateMap<Entidades.ProdutoReview, ProdutoReviewViewModel>();
+            CreateMap<Entidades.ProdutoReview, ProdutoReviewDetalhesViewModel>();
+
             CreateMap<Produto, ProdutoViewModel>();
             CreateMap<Produto, ProdutoDetalhesViewModel>();
         }

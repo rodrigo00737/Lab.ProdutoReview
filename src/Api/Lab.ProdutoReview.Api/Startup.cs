@@ -1,4 +1,5 @@
 using Lab.ProdutoReview.Api.Data;
+using Lab.ProdutoReview.Api.Data.Repositories;
 using Lab.ProdutoReview.Api.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,13 +29,14 @@ namespace Lab.ProdutoReview.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var connectionString = Configuration.GetConnectionString("ProdutoDb");
+            var connectionString = Configuration.GetConnectionString("ProdutoReviewDb");
             //"Server=localhost\\SQLEXPRESS;Database=ProdutoDb;Trusted_Connection=true"
-            var connectionString = @"Server=localhost\\SQLEXPRESS;Database=ProdutoReview;Trusted_Connection=True";
-
+            //var connectionString = @"Server=(LocalDb)\MSSQLLocalDB;Database=ProdutoReview;Trusted_Connection=True";
+            //connectionString = "Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=aspnet-MvcMovie;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\Movies.mdf"
+            
             services.AddDbContext<ProdutoReviewDbContext>(x => x.UseSqlServer(connectionString));
-
-            //services.AddSingleton<ProdutoReviewDbContext>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            
             services.AddAutoMapper(typeof(ProdutoProfile));
 
             services.AddControllers();

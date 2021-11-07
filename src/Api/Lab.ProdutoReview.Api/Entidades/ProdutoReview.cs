@@ -1,16 +1,11 @@
 ﻿using System;
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Lab.ProdutoReview.Api.Entidades
 {
     public class ProdutoReview
     {
-        public ProdutoReview(int id, string autor, int nota, string comentario, int produtoId)
-        {
-            Id = id;
+        public ProdutoReview(string autor, int nota, string comentario, int produtoId)
+        {            
             Autor = autor;
             Nota = nota;
             Comentario = comentario;

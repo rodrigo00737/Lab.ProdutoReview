@@ -5,9 +5,8 @@ namespace Lab.ProdutoReview.Api.Entidades
 {
     public class Produto
     {
-        public Produto(int id, string titulo, string descricao, decimal preco)
-        {
-            Id = id;
+        public Produto(string titulo, string descricao, decimal preco)
+        {                        
             Titulo = titulo;
             Descricao = descricao;
             Preco = preco;

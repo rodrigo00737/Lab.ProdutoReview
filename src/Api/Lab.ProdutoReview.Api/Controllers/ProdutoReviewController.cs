@@ -1,26 +1,48 @@
-﻿using Lab.ProdutoReview.Api.Models;
+﻿using AutoMapper;
+using Lab.ProdutoReview.Api.Data.Repositories;
+using Lab.ProdutoReview.Api.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lab.ProdutoReview.Api.Controllers
 {
     [ApiController]
     [Route("v1/api/{produtoId}/produtoReviews")]
-    public class ProdutoReviewController : Controller
+    public class ProdutoReviewController : ControllerBase
     {
-        [HttpGet("{id}")]
-        public IActionResult GetById(int produtoId, int id)
+        private readonly ProdutoRepository _repository;
+        private readonly IMapper _mapper;
+
+        public ProdutoReviewController(ProdutoRepository repository, IMapper mapper)
         {
-            return Ok();
+            _repository = repository;
+            _mapper = mapper;
+        }      
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int produtoId, int id)
+        {
+            var produtoReview = await _repository.GetReviewById(id);
+
+            if (produtoReview is null)
+            {
+                return NotFound();
+            }
+
+            var produtoDetalhes = _mapper.Map<ProdutoReviewDetalhesViewModel>(produtoReview);
+            produtoDetalhes.CriadoEm.ToString("s");
+
+            return Ok(produtoDetalhes);
         }
 
         [HttpPost]
-        public IActionResult Post(int produtoId, AddProdutoReviewInputModel model)
+        public async Task<IActionResult> Post(int produtoId, AddProdutoReviewInputModel model)
         {
-            return CreatedAtAction(nameof(GetById), new { id = 1, produtoId = 2}, model);
+            var produtoReview = new Entidades.ProdutoReview(model.Autor, model.Nota, model.Comentario, produtoId);
+
+            await _repository.AddProdutoReview(produtoReview);            
+
+            return CreatedAtAction(nameof(GetById), new { id = produtoReview.Id, produtoId = produtoId}, model);
         }
     }
 }
