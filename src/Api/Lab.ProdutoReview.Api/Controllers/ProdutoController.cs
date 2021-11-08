@@ -12,10 +12,10 @@ namespace Lab.ProdutoReview.Api.Controllers
     [Route("v1/api/[controller]")]
     public class ProdutoController : ControllerBase
     {
-        private readonly ProdutoRepository _repository;
+        private readonly IProdutoRepository _repository;
         private readonly IMapper _mapper;
 
-        public ProdutoController(ProdutoRepository repository, IMapper mapper)
+        public ProdutoController(IProdutoRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

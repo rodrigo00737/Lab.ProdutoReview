@@ -42,7 +42,17 @@ namespace Lab.ProdutoReview.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lab.ProdutoReview.Api", Version = "v1" });
+                c.SwaggerDoc("v1", 
+                    new OpenApiInfo 
+                        { 
+                            Title = "Lab.ProdutoReview.Api", 
+                            Version = "v1",
+                            Contact = new OpenApiContact
+                            {
+                                Name = "Rodrigo Dias",
+                                Email = "rodrigo00737@gmail.com"
+                            }
+                        });
             });
         }
 

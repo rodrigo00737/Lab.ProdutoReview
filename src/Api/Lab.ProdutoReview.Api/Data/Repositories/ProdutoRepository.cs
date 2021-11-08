@@ -34,7 +34,7 @@ namespace Lab.ProdutoReview.Api.Data.Repositories
         public async Task<Produto> GetById(int id)
         {
             return await _dbContext
-                            .Produtos                            
+                            .Produtos                                      
                             .SingleOrDefaultAsync(p => p.Id == id);
         }
 
@@ -50,7 +50,6 @@ namespace Lab.ProdutoReview.Api.Data.Repositories
         {
             return await _dbContext
                             .ProdutoReviews
-                            .Include(p => p.Produto)
                             .SingleOrDefaultAsync(p => p.Id == id);
         }
 
